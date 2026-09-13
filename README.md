@@ -1,2 +1,6 @@
-# bioSite
-CSD 340 bioSite project — a three-page biography site built with HTML and CSS.
+# CSD 340 Web Development with HTML and CSS
+
+## Contributors
+
+- Sue Sampson
+- Kristian Wareing

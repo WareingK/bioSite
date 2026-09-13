@@ -1,0 +1,540 @@
+/*
+    Name:       Kristian Wareing
+    Date:       September 12, 2026
+    Assignment: 6.3 - bioSite: Development
+
+    Organized by the Atomic Design methodology. Atoms are declared first as
+    design tokens and base element rules, molecules are assembled from those
+    atoms, and organisms are assembled from the molecules. Every value in the
+    token block comes from the style guide and color palette submitted in
+    Assignment 5.2.
+*/
+
+/* ============================================================
+   ATOMS - DESIGN TOKENS
+   ============================================================ */
+
+:root {
+
+    /* Six color palette pulled from the subject's own photographs. */
+    --color-ink: #14161A;
+    --color-gunmetal: #24282E;
+    --color-steel: #8B939C;
+    --color-pearl: #EDEAE4;
+    --color-amber: #F0B429;
+    --color-brick: #A62B1F;
+
+    /* Typefaces. Oswald for display, Inter for body, Roboto Mono for data. */
+    --font-display: 'Oswald', Impact, sans-serif;
+    --font-body: 'Inter', Helvetica, Arial, sans-serif;
+    --font-mono: 'Roboto Mono', Consolas, monospace;
+
+    /* Type scale. Base 16px on a 1.25 modular scale. */
+    --size-h1: 3.05rem;
+    --size-h2: 2.44rem;
+    --size-h3: 1.56rem;
+    --size-lead: 1.25rem;
+    --size-body: 1rem;
+    --size-small: 0.8rem;
+
+    /* Vertical rhythm. All spacing is a multiple of the 8px base unit. */
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-6: 48px;
+    --space-12: 96px;
+
+    /* Layout tokens. */
+    --container: 1200px;
+    --gutter: 24px;
+    --nav-height: 64px;
+    --measure: 68ch;
+
+    /* Motion. Color and border only, never layout. */
+    --transition: 120ms ease-out;
+}
+
+/* ============================================================
+   ATOMS - BASE ELEMENTS
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-ink);
+    color: var(--color-pearl);
+    font-family: var(--font-body);
+    font-size: var(--size-body);
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    margin: 0 0 var(--space-2) 0;
+}
+
+h1 {
+    font-size: var(--size-h1);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+}
+
+h2 {
+    font-size: var(--size-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+}
+
+h3 {
+    font-size: var(--size-h3);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+}
+
+/* Paragraph spacing is 24px and the measure is capped for readability. */
+p {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-3) 0;
+}
+
+/* Link atom. Amber underline by default, amber fill on hover. */
+a {
+    color: var(--color-amber);
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-amber);
+    transition: color var(--transition), background-color var(--transition),
+                border-color var(--transition);
+}
+
+a:hover {
+    background-color: var(--color-amber);
+    color: var(--color-ink);
+}
+
+a:visited {
+    color: var(--color-steel);
+}
+
+a:focus {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+}
+
+ul {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-3) 0;
+    padding-left: var(--space-3);
+}
+
+li {
+    margin-bottom: var(--space-1);
+}
+
+strong {
+    font-weight: 600;
+}
+
+em {
+    font-style: italic;
+}
+
+/* Square corners throughout, no exceptions. */
+img {
+    display: block;
+    max-width: 100%;
+    border-radius: 0;
+}
+
+/* ============================================================
+   ATOMS - TYPOGRAPHIC UTILITIES
+   ============================================================ */
+
+/* Opening paragraph, one step up from body copy. */
+.lead {
+    font-size: var(--size-lead);
+    line-height: 1.55;
+}
+
+/* Monospaced label. Sits above headings and inside the data strip. */
+.label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-amber);
+    margin-bottom: var(--space-1);
+}
+
+/* Caption text. Mandatory on every image in the build. */
+.caption {
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    line-height: 1.45;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-steel);
+}
+
+/* The single brick accent permitted per page. */
+.accent-brick {
+    color: var(--color-brick);
+}
+
+/* Amber rule sitting under a page title. */
+.rule {
+    border: 0;
+    border-top: 2px solid var(--color-amber);
+    width: 120px;
+    margin: 0 0 var(--space-4) 0;
+}
+
+/* ============================================================
+   MOLECULES - LAYOUT
+   ============================================================ */
+
+/* Centered container with 24px side gutters. */
+.container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+/* Standard section band. 96px top and bottom on desktop. */
+.section {
+    padding: var(--space-12) 0;
+}
+
+/* Section on the pearl background, used to break up the dark page. */
+.section-light {
+    background-color: var(--color-pearl);
+    color: var(--color-gunmetal);
+}
+
+.section-light h2,
+.section-light h3 {
+    color: var(--color-ink);
+}
+
+.section-light a {
+    color: var(--color-ink);
+}
+
+.section-light .caption {
+    color: var(--color-gunmetal);
+}
+
+/* Flexbox grid. No framework. */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gutter);
+}
+
+.col {
+    flex: 1 1 300px;
+    min-width: 0;
+}
+
+/* Narrow centered block used for the landing page intro. */
+.centered {
+    max-width: var(--measure);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.centered p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================================
+   MOLECULES - NAVIGATION
+   ============================================================ */
+
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--nav-height);
+    background-color: var(--color-ink);
+    border-bottom: 1px solid var(--color-gunmetal);
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--nav-height);
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+.wordmark {
+    font-family: var(--font-display);
+    font-size: var(--size-h3);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.nav-links a {
+    color: var(--color-pearl);
+    border-bottom: 2px solid transparent;
+    margin-left: var(--space-4);
+    padding-bottom: 2px;
+}
+
+.nav-links a:hover {
+    background-color: transparent;
+    color: var(--color-amber);
+    border-bottom-color: var(--color-amber);
+}
+
+/* Active page is marked with an amber label and a 2px underline. */
+.nav-links .current {
+    color: var(--color-amber);
+    border-bottom-color: var(--color-amber);
+}
+
+/* ============================================================
+   MOLECULES - COMPONENTS
+   ============================================================ */
+
+/* Button atom. 12px by 28px padding, square corners, amber fill on hover. */
+.button {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background-color: var(--color-amber);
+    color: var(--color-ink);
+    border: 2px solid var(--color-amber);
+    padding: 12px 28px;
+}
+
+.button:hover {
+    background-color: transparent;
+    color: var(--color-amber);
+}
+
+/* Outline variant for use on dark sections. */
+.button-dark {
+    background-color: transparent;
+    color: var(--color-amber);
+}
+
+.button-dark:hover {
+    background-color: var(--color-amber);
+    color: var(--color-ink);
+}
+
+/* Figure with caption. The frame is a sized placeholder until the
+   photography from Assignment 5.2 is placed in a later module. */
+.figure {
+    margin: 0 0 var(--space-3) 0;
+}
+
+.frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--color-gunmetal);
+    border: 1px solid var(--color-steel);
+    min-height: 240px;
+    padding: var(--space-2);
+}
+
+/* Portrait frame is cropped to 4:5 so the busy background falls away. */
+.frame-portrait {
+    min-height: 420px;
+}
+
+.figure figcaption {
+    margin-top: var(--space-1);
+}
+
+/* Pull quote lifted from the subject's own words. */
+.pullquote {
+    font-family: var(--font-display);
+    font-size: var(--size-h3);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    color: var(--color-amber);
+    border-left: 2px solid var(--color-amber);
+    margin: var(--space-3) 0 0 0;
+    padding-left: var(--space-3);
+}
+
+/* Data strip referencing a vehicle spec plate. */
+.data-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gutter);
+    border-top: 1px solid var(--color-gunmetal);
+    border-bottom: 1px solid var(--color-gunmetal);
+    padding: var(--space-4) 0;
+}
+
+.data-cell {
+    flex: 1 1 200px;
+}
+
+.data-cell p {
+    margin-bottom: 0;
+}
+
+/* Band closing a page and pointing at the next one. */
+.band {
+    background-color: var(--color-gunmetal);
+    padding: var(--space-6) 0;
+    text-align: center;
+}
+
+.band p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================================
+   ORGANISMS
+   ============================================================ */
+
+/* Landing page hero. The only place on the site where type sits over an
+   image, held readable by an Ink overlay. */
+.hero {
+    background-color: var(--color-gunmetal);
+    border-bottom: 2px solid var(--color-amber);
+    padding: var(--space-12) 0;
+}
+
+.hero .tagline {
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-steel);
+    margin-bottom: var(--space-4);
+}
+
+/* Page header used on the two interior pages. */
+.page-head {
+    padding: var(--space-12) 0 var(--space-6) 0;
+}
+
+/* Alternating hobby block. Reversing the row keeps each hobby visually
+   separate as the reader moves down the page. */
+.hobby {
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid var(--color-gunmetal);
+}
+
+.hobby-reverse .row {
+    flex-direction: row-reverse;
+}
+
+/* Content card used in the three column accomplishments section. */
+.card {
+    background-color: var(--color-gunmetal);
+    padding: var(--space-3);
+    border-top: 2px solid var(--color-amber);
+}
+
+.card p {
+    max-width: none;
+}
+
+/* Site footer. */
+.site-footer {
+    background-color: var(--color-gunmetal);
+    padding: var(--space-6) 0;
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    letter-spacing: 0.08em;
+    color: var(--color-steel);
+}
+
+.site-footer p {
+    max-width: none;
+    margin-bottom: var(--space-1);
+}
+
+/* ============================================================
+   RESPONSIVE - MOBILE FIRST BREAKPOINTS
+   ============================================================ */
+
+@media screen and (max-width: 1024px) {
+    :root {
+        --size-h1: 2.44rem;
+        --size-h2: 1.95rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    /* Section padding drops to 48px on mobile. */
+    .section,
+    .hobby,
+    .hero {
+        padding: var(--space-6) 0;
+    }
+
+    /* Navigation collapses to a stacked list. */
+    .site-nav {
+        position: static;
+        height: auto;
+    }
+
+    .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding-top: var(--space-2);
+        padding-bottom: var(--space-2);
+    }
+
+    .nav-links a {
+        margin-left: 0;
+        margin-right: var(--space-3);
+    }
+
+    /* All alternating blocks stack image first. */
+    .hobby-reverse .row {
+        flex-direction: row;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --size-h1: 1.95rem;
+        --gutter: 16px;
+    }
+
+    .frame-portrait {
+        min-height: 320px;
+    }
+}
