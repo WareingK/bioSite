@@ -1,7 +1,7 @@
 /*
     Name:       Kristian Wareing
-    Date:       September 12, 2026
-    Assignment: 6.3 - bioSite: Development
+    Date:       September 20, 2026
+    Assignment: 7.2 - bioSite: Development and GitHub Pages Deployment
 
     Organized by the Atomic Design methodology. Atoms are declared first as
     design tokens and base element rules, molecules are assembled from those
@@ -351,26 +351,36 @@ img {
     color: var(--color-ink);
 }
 
-/* Figure with caption. The frame is a sized placeholder until the
-   photography from Assignment 5.2 is placed in a later module. */
+/* Figure with caption. Captions are mandatory on every image in the build. */
 .figure {
     margin: 0 0 var(--space-3) 0;
 }
 
-.frame {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: var(--color-gunmetal);
+.figure img {
+    width: 100%;
+    height: auto;
     border: 1px solid var(--color-steel);
-    min-height: 240px;
-    padding: var(--space-2);
 }
 
-/* Portrait frame is cropped to 4:5 so the busy background falls away. */
-.frame-portrait {
-    min-height: 420px;
+/* Card images are cropped to a common 4:3 frame so the three column row
+   lines up even though the source photographs differ in shape. */
+.figure-card img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* The portrait is cropped to 4:5 so the frame tightens and the busy
+   background falls away. */
+.figure-portrait img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 30%;
+}
+
+/* Wide feature image running the full width of its container. */
+.figure-wide img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
 }
 
 .figure figcaption {
@@ -427,7 +437,10 @@ img {
 /* Landing page hero. The only place on the site where type sits over an
    image, held readable by an Ink overlay. */
 .hero {
-    background-color: var(--color-gunmetal);
+    background-image: linear-gradient(rgba(20, 22, 26, 0.55), rgba(20, 22, 26, 0.55)),
+                      url("img/hero-badge.jpg");
+    background-size: cover;
+    background-position: center;
     border-bottom: 2px solid var(--color-amber);
     padding: var(--space-12) 0;
 }
@@ -534,7 +547,7 @@ img {
         --gutter: 16px;
     }
 
-    .frame-portrait {
-        min-height: 320px;
+    .figure-portrait img {
+        aspect-ratio: 3 / 4;
     }
 }
